@@ -1,16 +1,17 @@
 const tabletojson = require('tabletojson');
 
 async function getData() {
-   try { 
-          
-    const data = tabletojson.convertUrl(
+   try {          
+    let data = [];
+    await tabletojson.convertUrl(
     'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start=20180728&end=20181217',
     { useFirstRowForHeadings: true },
     function(tablesAsJson) {
-      //console.log(tablesAsJson);
+        data.push(tablesAsJson);
         }
-    );    
-        return data;
+    );   
+    console.log(data);
+    return data;
    } catch (e) {
        console.log("scraping start", e)
        return "error";

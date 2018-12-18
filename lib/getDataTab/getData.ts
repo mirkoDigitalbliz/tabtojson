@@ -1,10 +1,13 @@
-  import get_data_from_table from "../get_data_from_table";  
-  
-  function dataTable(router) {
-      var all_data = get_data_from_table();
+  import get_data_from_table from "../get_data_from_table"; 
+  var cronJob = require('cron').CronJob;
+  new cronJob("* 30 * * * *", get_data_from_table, null, true);
+
+  function dataTable(router) {      
       router.get("/tab_to_json", (req, res) => {
-          res.send(all_data);
+        get_data_from_table().then((result) => {
+            res.json(result);
+          });
       });      
   }
     
-  export default dataTable;
+export default dataTable;
